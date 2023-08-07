@@ -12,3 +12,12 @@ interesting. Theoretically, you could match them back to their original dataset.
 shared task results, please refrain from adding the ground truth to the leaderboards.
 
 The licenses of the respective datasets are placed inside the zip files. 
+
+The tsv files can be loaded with pandas:
+
+```python
+import pandas as pd
+import csv
+
+df_source = pd.read_csv("<filename>", sep="\t", quoting=csv.QUOTE_NONE)
+```
