@@ -6,7 +6,7 @@ for open source LLMs with MT and summarization
 
 import guidance, torch
 
-from ground_truth.SharedTask2023.baselines.model_dict import load_from_catalogue
+from model_dict import load_from_catalogue
 
 
 class DirectAssessment:
@@ -72,10 +72,7 @@ class DirectAssessment:
         response_placeholder=None,
     ):
         if mt:
-            fn = self.direct_assessment_mt_block
-        else:
-            fn = self.direct_assessment_summ_block
-        prompt = fn(
+            prompt = self.direct_assessment_mt_block(
             gt=gt,
             hyp=hyp,
             response_placeholder=response_placeholder,
@@ -83,6 +80,14 @@ class DirectAssessment:
             target_lang="German",
             source_lang="English"
         )
+        else:
+            prompt = self.direct_assessment_summ_block(
+            gt=gt,
+            hyp=hyp,
+            response_placeholder=response_placeholder,
+            prompt_placeholder=prompt_placeholder
+        )
+
 
         guidance_prompt = guidance(prompt, llm=self.model)
         res = guidance_prompt()
@@ -92,7 +97,9 @@ class DirectAssessment:
 
 
 if __name__ == "__main__":
-    modelname = "NousResearch/Nous-Hermes-13b"
+    #modelname = "NousResearch/Nous-Hermes-13b"
+    #modelname = "TheBloke/guanaco-65B-GPTQ"
+    modelname = "TheBloke/WizardLM-13B-V1.1-GPTQ"
     model, tokenizer, u_prompt, a_prompt = load_from_catalogue(modelname)
     BPG = DirectAssessment(model=model, tokenizer=tokenizer)
 

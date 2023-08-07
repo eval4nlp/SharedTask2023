@@ -3,6 +3,7 @@ from transformers import (
     LlamaForCausalLM,
     AutoTokenizer,
     AutoModelForCausalLM,
+    LlamaTokenizer
 )
 from auto_gptq import AutoGPTQForCausalLM
 from peft import PeftModel
@@ -25,9 +26,9 @@ def load_llama_model(model_name):
 
 def load_peft_model(model_name, orig):
     model = LlamaForCausalLM.from_pretrained(
-        model_name, device_map="auto", torch_dtype=torch.float16
+        model_name, device_map="auto"
     )
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = LlamaTokenizer.from_pretrained(model_name)
     model = PeftModel.from_pretrained(model, orig)
     return model, tokenizer
 
@@ -63,16 +64,18 @@ def load_from_catalogue(model_name):
         },
         "TheBloke/guanaco-65B-GPTQ": {
             "load_method": lambda x: load_gptq_model(
-                x, base_name="Guanaco-65B-GPTQ-4bit.act-order", trust_remote_code=True
+                x, base_name="Guanaco-65B-GPTQ-4bit.act-order", trust_remote_code=True, #might not need the trust remote code
             ),
             "user_prompt": "### Human:",
             "assistant_prompt": "### Assistant:",
         },
-        "decapoda-research/llama-7b-hf": {
-            "load_method": lambda x: load_peft_model(x, orig="avocardio/alpaca-lora-7b-german-base-52k"),
-            "user_prompt": "",
-            "assistant_prompt": "",
-        }
+        "TheBloke/WizardLM-13B-V1.1-GPTQ": {
+            "load_method": lambda x: load_gptq_model(
+                x, base_name="wizardlm-13b-v1.1-GPTQ-4bit-128g.no-act.order", trust_remote_code=True, #might not need the trust remote code
+            ),
+            "user_prompt": "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.\n\n USER: ",
+            "assistant_prompt": "Assistant: ",
+        },
     }
 
 
