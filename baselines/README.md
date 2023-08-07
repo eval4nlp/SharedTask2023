@@ -7,3 +7,5 @@ baselines. Current baselines are the following:
                         implementation iterates over the dev-sets.
 * `da_baselines.py` - A baseline metric that prompts metrics to return DA scores. We enforce the output scores using 
                         the Microsoft Guidance Library (https://github.com/microsoft/guidance)
+
+Further, the methods in `model_dict.py` should give first hints on how to load these models.
