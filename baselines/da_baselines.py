@@ -70,6 +70,9 @@ class DirectAssessment:
         mt = True,
         prompt_placeholder=None,
         response_placeholder=None,
+        target_lang="German",
+        source_lang="English",
+        verbose=False
     ):
         if mt:
             prompt = self.direct_assessment_mt_block(
@@ -77,8 +80,8 @@ class DirectAssessment:
             hyp=hyp,
             response_placeholder=response_placeholder,
             prompt_placeholder=prompt_placeholder,
-            target_lang="German",
-            source_lang="English"
+            target_lang=target_lang,
+            source_lang=source_lang
         )
         else:
             prompt = self.direct_assessment_summ_block(
@@ -88,6 +91,8 @@ class DirectAssessment:
             prompt_placeholder=prompt_placeholder
         )
 
+        if verbose:
+            print(prompt)
 
         guidance_prompt = guidance(prompt, llm=self.model)
         res = guidance_prompt()
@@ -98,8 +103,8 @@ class DirectAssessment:
 
 if __name__ == "__main__":
     #modelname = "NousResearch/Nous-Hermes-13b"
-    #modelname = "TheBloke/guanaco-65B-GPTQ"
-    modelname = "TheBloke/WizardLM-13B-V1.1-GPTQ"
+    modelname = "TheBloke/guanaco-65B-GPTQ"
+    #modelname = "TheBloke/WizardLM-13B-V1.1-GPTQ"
     model, tokenizer, u_prompt, a_prompt = load_from_catalogue(modelname)
     BPG = DirectAssessment(model=model, tokenizer=tokenizer)
 
