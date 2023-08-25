@@ -11,4 +11,4 @@ conda activate Eval4NLP23
 pip install -r requirements
 ```
 
-The link to the CodaLab competition will follow soon.
+Our CodaLab competition can be found here: https://codalab.lisn.upsaclay.fr/competitions/15072
