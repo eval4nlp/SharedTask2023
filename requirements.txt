@@ -9,5 +9,6 @@ guidance
 sentencepiece
 protobuf
 bitsandbytes
+scipy
 
 
