@@ -8,5 +8,6 @@ https://github.com/PanQiWei/AutoGPTQ/releases/download/v0.3.2/auto_gptq-0.3.2+cu
 guidance
 sentencepiece
 protobuf
+bitsandbytes
 
 
