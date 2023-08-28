@@ -9,9 +9,9 @@ from auto_gptq import AutoGPTQForCausalLM
 from peft import PeftModel
 
 
-def load_automodel(model_name):
+def load_automodel(model_name, trust_remote_code=False, dtype=torch.float16, load_in_8bit=False):
     model = AutoModelForCausalLM.from_pretrained(
-        model_name, device_map="auto", torch_dtype=torch.float16
+        model_name, device_map="auto", torch_dtype=dtype, trust_remote_code=trust_remote_code, load_in_8bit = load_in_8bit
     )
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return model, tokenizer
@@ -75,6 +75,23 @@ def load_from_catalogue(model_name):
             "user_prompt": "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.\n\n USER: ",
             "assistant_prompt": "Assistant: ",
         },
+        "TheBloke/Platypus2-70B-Instruct-GPTQ": {
+            "load_method": lambda x: load_gptq_model(
+                x, trust_remote_code=False, inject_fused_attention=False
+            ),
+            "user_prompt": "### Instruction:",
+            "assistant_prompt": "### Response:",
+        },
+        "Open-Orca/OpenOrca-Platypus2-13B":{
+            "load_method": lambda x: load_automodel(x, trust_remote_code=True),
+            "user_prompt": "### Instruction:",
+            "assistant_prompt": "### Response:",
+        },
+          "psmathur/orca_mini_v3_7b":{
+            "load_method": lambda x: load_automodel(x, trust_remote_code=True, load_in_8bit=True),
+            "user_prompt": "### System: You are an AI assistant that follows instruction extremely well. Help as much as you can. \n\n ### User:",
+            "assistant_prompt": "### Assistant:",
+        }
     }
 
 
