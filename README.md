@@ -12,13 +12,13 @@ pip install -r requirements
 ```
 The `data` folder contains train, dev and test sets. The `baseline` folder contains baseline scripts and an example submission for the Codabench test phase of our shared task.
 
-# Test Phase
+## Test Phase
 
 The test phase of the share task is being conducted on Codabench: https://www.codabench.org/competitions/1359/#/pages-tab
 
 Our CodaLab competition for the Dev-Phase can be found here: https://codalab.lisn.upsaclay.fr/competitions/15072
 
-# Citation
+## Citation
 
 ```
 @article{leiter2023eval4nlp,
